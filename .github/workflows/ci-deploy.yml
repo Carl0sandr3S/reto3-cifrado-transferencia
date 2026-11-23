@@ -1,0 +1,63 @@
+name: ci-deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+      - run: python -m pytest
+
+  deploy:
+    needs: test
+    if: github.event_name != 'pull_request'   # los PR solo corren pruebas; no tocan la nube
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write   # OBLIGATORIO para pedir el token OIDC que se intercambia por credenciales de GCP
+    env:
+      # Los valores llegan por variables del repositorio (no son secretos). Se pasan por `env`
+      # y no se interpolan dentro de los scripts, para evitar inyección de comandos.
+      GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+      GCP_REGION: ${{ vars.GCP_REGION }}
+      GCP_KMS_KEY: ${{ vars.GCP_KMS_KEY }}
+      GCP_WIF_PROVIDER: ${{ vars.GCP_WIF_PROVIDER }}
+      GCP_DEPLOYER_SA: ${{ vars.GCP_DEPLOYER_SA }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate configuration
+        # Falla ANTES de autenticar si falta una variable o GCP_WIF_PROVIDER está mal formado
+        # (un valor vacío o con el ID en vez del NÚMERO de proyecto produce: Invalid value for "audience").
+        run: python3 deploy/gcp.py validate-ci
+
+      - id: auth
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: ${{ env.GCP_WIF_PROVIDER }}
+          service_account: ${{ env.GCP_DEPLOYER_SA }}
+
+      - name: Build and push image
+        run: |
+          set -euo pipefail
+          IMAGE="${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/securetransfer/securetransfer:${GITHUB_SHA::7}"
+          echo "IMAGE=${IMAGE}" >> "$GITHUB_ENV"
+          gcloud auth configure-docker "${GCP_REGION}-docker.pkg.dev" --quiet
+          docker build -t "${IMAGE}" .
+          docker push "${IMAGE}"
+
+      - name: Deploy Cloud Run Jobs
+        run: python3 deploy/gcp.py deploy-jobs --image "${IMAGE}"

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% from "_icons.html" import alert_circle %}
+{% block body %}
+<section class="card center" style="max-width:520px;margin:30px auto">
+  {{ alert_circle(48) }}
+  <h1 style="margin-top:12px">Ups</h1>
+  <p class="lead" style="margin-bottom:6px">{{ msg }}</p>
+  <a class="btn" href="{{ url_for('index') }}">Volver al inicio</a>
+</section>
+{% endblock %}

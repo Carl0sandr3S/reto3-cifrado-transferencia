@@ -1,0 +1,27 @@
+# Secretos y credenciales: NUNCA al repositorio
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*-credentials.json
+service-account*.json
+gha-creds-*.json
+application_default_credentials.json
+
+# Datos y artefactos de ejecución
+*.enc
+*.partial
+*.uploading
+data/
+out/
+tmp/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/

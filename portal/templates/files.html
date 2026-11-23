@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% from "_icons.html" import file_icon, empty_folder %}
+{% block body %}
+<h1>Documentos recibidos</h1>
+<p class="lead">Solo aparecen los archivos que ya pasaron por el cifrado y la verificación de integridad.</p>
+
+<section class="card">
+{% if items %}
+  <table>
+    <tr class="head"><th>Archivo</th><th>Enviado por</th><th>Fecha</th><th>Tamaño</th><th></th></tr>
+    {% for i in items %}
+    <tr class="row">
+      <td><div class="fname">{{ file_icon() }}<span>{{ i.nombre }}</span></div></td>
+      <td>{{ i.subido_por }}</td>
+      <td>{{ i.fecha }}</td>
+      <td>{{ i.kb }} KB</td>
+      <td><a class="dl" href="{{ url_for('download', run=i.run, name=i.nombre) }}">Descargar</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+{% else %}
+  <div class="empty">
+    {{ empty_folder() }}
+    <p>Aún no hay archivos.</p>
+    <small>Cuando un comercial envíe uno y termine el proceso, aparecerá aquí.</small>
+  </div>
+{% endif %}
+</section>
+{% endblock %}

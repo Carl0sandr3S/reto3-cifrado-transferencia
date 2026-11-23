@@ -1,0 +1,4 @@
+# Cotas inferiores (igual que el resto del repositorio): para producción genere un lock y fije versiones.
+flask>=3.0
+gunicorn>=22
+google-cloud-storage>=2.16   # trae google-auth, que el portal usa para llamar a Cloud Run / Airflow

@@ -1,0 +1,4 @@
+# Cotas inferiores: para producción genere un lock con `pip freeze` o pip-compile y fije versiones.
+cryptography>=43
+google-cloud-kms>=2.21
+google-cloud-storage>=2.16

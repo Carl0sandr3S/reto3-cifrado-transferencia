@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 850" width="1440" height="850" font-family="DejaVu Sans, Helvetica, Arial, sans-serif">
+<defs><marker id="a5F6368" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5F6368"/></marker><marker id="a8E4EC6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8E4EC6"/></marker><marker id="a1A73E8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1A73E8"/></marker><marker id="a188038" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#188038"/></marker><marker id="aE8710A" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E8710A"/></marker><marker id="aF9AB00" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#F9AB00"/></marker></defs>
+<rect width="1440" height="850" fill="#fff"/>
+<text x="720.0" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#202124">securetransfer — Arquitectura en Google Cloud</text>
+<text x="720.0" y="50" text-anchor="middle" font-size="12" fill="#5F6368">Envelope encryption (AES-256-GCM + Cloud KMS) · separación de funciones A/B · portal y orquestación opcionales</text>
+<rect x="20" y="320" width="535" height="175" rx="14" fill="#E8F0FE" stroke="#1A73E8" stroke-width="1.5"/>
+<text x="34" y="340" font-size="12" font-weight="bold" fill="#1A73E8">PUNTO A — solo cifra</text>
+<rect x="570" y="320" width="250" height="175" rx="14" fill="#FEF7E0" stroke="#B06000" stroke-width="1.5"/>
+<text x="584" y="340" font-size="12" font-weight="bold" fill="#B06000">SILVER</text>
+<rect x="835" y="320" width="585" height="175" rx="14" fill="#E6F4EA" stroke="#188038" stroke-width="1.5"/>
+<text x="849" y="340" font-size="12" font-weight="bold" fill="#188038">PUNTO B — solo descifra</text>
+<rect x="30" y="100" width="140" height="70" rx="10" fill="#F3E8FD" stroke="#8E4EC6" stroke-width="1.6"/>
+<text x="100.0" y="122" text-anchor="middle" font-size="13" font-weight="bold" fill="#202124">Comercial</text>
+<text x="100.0" y="139" text-anchor="middle" font-size="10.5" fill="#3C4043">sube archivos</text>
+<rect x="250" y="95" width="310" height="80" rx="10" fill="#F3E8FD" stroke="#8E4EC6" stroke-width="1.6"/>
+<text x="405.0" y="117" text-anchor="middle" font-size="13" font-weight="bold" fill="#202124">st-portal · Cloud Run (Flask)</text>
+<text x="405.0" y="134" text-anchor="middle" font-size="10.5" fill="#3C4043">login por rol (hash de clave)</text>
+<text x="405.0" y="151" text-anchor="middle" font-size="10.5" fill="#3C4043">Secret Manager: portal-secret-key, portal-users</text>
+<text x="405.0" y="168" text-anchor="middle" font-size="10.5" fill="#3C4043">SA st-portal: sin acceso a KMS ni a SILVER</text>
+<rect x="700" y="95" width="350" height="80" rx="10" fill="#F1F3F4" stroke="#5F6368" stroke-width="1.6"/>
+<text x="875.0" y="117" text-anchor="middle" font-size="13" font-weight="bold" fill="#202124">Airflow / Cloud Composer (opcional)</text>
+<text x="875.0" y="134" text-anchor="middle" font-size="10.5" fill="#3C4043">DAG: wait_for_file → send → receive → verify</text>
+<text x="875.0" y="151" text-anchor="middle" font-size="10.5" fill="#3C4043">SA st-orchestrator: solo ejecuta los jobs</text>
+<text x="875.0" y="168" text-anchor="middle" font-size="10.5" fill="#3C4043">(no ve la llave ni el contenido)</text>
+<rect x="1230" y="100" width="170" height="70" rx="10" fill="#F3E8FD" stroke="#8E4EC6" stroke-width="1.6"/>
+<text x="1315.0" y="122" text-anchor="middle" font-size="13" font-weight="bold" fill="#202124">Jefe</text>
+<text x="1315.0" y="139" text-anchor="middle" font-size="10.5" fill="#3C4043">descarga lo ya verificado</text>
+<path d="M40,370 v90 a100.0,10 0 0 0 200,0 v-90 a100.0,10 0 0 0 -200,0 a100.0,10 0 0 0 200,0" fill="#fff" stroke="#1A73E8" stroke-width="1.6"/>
+<text x="140.0" y="394" text-anchor="middle" font-size="13" font-weight="bold" fill="#202124">Bucket BRONZE · portal/</text>
+<text x="140.0" y="411" text-anchor="middle" font-size="10.5" fill="#3C4043">archivo crudo (en claro)</text>
+<rect x="290" y="360" width="240" height="110" rx="10" fill="#fff" stroke="#1A73E8" stroke-width="1.6"/>
+<text x="410.0" y="382" text-anchor="middle" font-size="13" font-weight="bold" fill="#202124">Cloud Run Job st-send</text>
+<text x="410.0" y="399" text-anchor="middle" font-size="10.5" fill="#3C4043">SA st-sender · cryptoKeyEncrypter</text>
+<text x="410.0" y="416" text-anchor="middle" font-size="10.5" fill="#3C4043">1 DEK AES-256 aleatoria por archivo</text>
+<text x="410.0" y="433" text-anchor="middle" font-size="10.5" fill="#3C4043">2 cifra por chunks de 1 MiB (GCM)</text>
+<text x="410.0" y="450" text-anchor="middle" font-size="10.5" fill="#3C4043">3 envuelve la DEK con KMS · 4 sube .enc</text>
+<path d="M585,370 v90 a110.0,10 0 0 0 220,0 v-90 a110.0,10 0 0 0 -220,0 a110.0,10 0 0 0 220,0" fill="#fff" stroke="#B06000" stroke-width="1.6"/>
+<text x="695.0" y="394" text-anchor="middle" font-size="13" font-weight="bold" fill="#202124">Bucket SILVER · portal/</text>
+<text x="695.0" y="411" text-anchor="middle" font-size="10.5" fill="#3C4043">archivo.enc (ilegible)</text>
+<text x="695.0" y="428" text-anchor="middle" font-size="10.5" fill="#3C4043">cabecera + DEK envuelta</text>
+<text x="695.0" y="445" text-anchor="middle" font-size="10.5" fill="#3C4043">+ SHA-256 cifrado</text>
+<rect x="850" y="360" width="240" height="110" rx="10" fill="#fff" stroke="#188038" stroke-width="1.6"/>
+<text x="970.0" y="382" text-anchor="middle" font-size="13" font-weight="bold" fill="#202124">Cloud Run Job st-receive</text>
+<text x="970.0" y="399" text-anchor="middle" font-size="10.5" fill="#3C4043">SA st-receiver · cryptoKeyDecrypter</text>
+<text x="970.0" y="416" text-anchor="middle" font-size="10.5" fill="#3C4043">1 desenvuelve la DEK con KMS</text>
+<text x="970.0" y="433" text-anchor="middle" font-size="10.5" fill="#3C4043">2 autentica cada chunk</text>
+<text x="970.0" y="450" text-anchor="middle" font-size="10.5" fill="#3C4043">3 recalcula SHA-256 · 4 publica si coincide</text>
+<path d="M1180,370 v90 a110.0,10 0 0 0 220,0 v-90 a110.0,10 0 0 0 -220,0 a110.0,10 0 0 0 220,0" fill="#fff" stroke="#188038" stroke-width="1.6"/>
+<text x="1290.0" y="394" text-anchor="middle" font-size="13" font-weight="bold" fill="#202124">Bucket GOLD · portal/</text>
+<text x="1290.0" y="411" text-anchor="middle" font-size="10.5" fill="#3C4043">archivo recuperado</text>
+<text x="1290.0" y="428" text-anchor="middle" font-size="10.5" fill="#3C4043">(idéntico al original)</text>
+<rect x="560" y="545" width="270" height="75" rx="10" fill="#FEEFE3" stroke="#E8710A" stroke-width="1.6"/>
+<text x="695.0" y="567" text-anchor="middle" font-size="13" font-weight="bold" fill="#202124">Cloud KMS · transfer-kek</text>
+<text x="695.0" y="584" text-anchor="middle" font-size="10.5" fill="#3C4043">keyring securetransfer-ring</text>
+<text x="695.0" y="601" text-anchor="middle" font-size="10.5" fill="#3C4043">rotación 90 días · la KEK nunca sale</text>
+<rect x="1050" y="545" width="280" height="75" rx="10" fill="#fff" stroke="#5F6368" stroke-width="1.6"/>
+<text x="1190.0" y="567" text-anchor="middle" font-size="13" font-weight="bold" fill="#202124">Cloud Run Job st-verify</text>
+<text x="1190.0" y="584" text-anchor="middle" font-size="10.5" fill="#3C4043">SA st-verifier · solo lectura</text>
+<text x="1190.0" y="601" text-anchor="middle" font-size="10.5" fill="#3C4043">compara SHA-256 original vs recuperado</text>
+<rect x="190" y="545" width="280" height="75" rx="10" fill="#fff" stroke="#5F6368" stroke-width="1.6"/>
+<text x="330.0" y="567" text-anchor="middle" font-size="13" font-weight="bold" fill="#202124">Cloud Logging / Audit Logs</text>
+<text x="330.0" y="584" text-anchor="middle" font-size="10.5" fill="#3C4043">JSON: run_id, hash, duración</text>
+<text x="330.0" y="601" text-anchor="middle" font-size="10.5" fill="#3C4043">sin contenido ni llaves</text>
+<rect x="40" y="735" width="1360" height="75" rx="10" fill="#F1F3F4" stroke="#5F6368" stroke-width="1.6"/>
+<text x="720.0" y="757" text-anchor="middle" font-size="13" font-weight="bold" fill="#202124">CI/CD: GitHub Actions → Cloud Build → Artifact Registry</text>
+<text x="720.0" y="774" text-anchor="middle" font-size="10.5" fill="#3C4043">pytest en cada push/PR · deploy en main con Workload Identity Federation (sin llaves JSON)</text>
+<text x="720.0" y="791" text-anchor="middle" font-size="10.5" fill="#3C4043">una sola imagen no-root se despliega en los 3 jobs (st-send, st-receive, st-verify)</text>
+<polyline points="170,135 250,135" fill="none" stroke="#8E4EC6" stroke-width="1.6" marker-end="url(#a8E4EC6)"/>
+<text x="210" y="128" text-anchor="middle" font-size="10" fill="#8E4EC6" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="600">sube</text>
+<polyline points="560,135 700,135" fill="none" stroke="#8E4EC6" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a8E4EC6)"/>
+<text x="630" y="128" text-anchor="middle" font-size="10" fill="#8E4EC6" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="600">trigger=airflow</text>
+<polyline points="290,175 290,250 140,250 140,360" fill="none" stroke="#8E4EC6" stroke-width="1.6" marker-end="url(#a8E4EC6)"/>
+<text x="215" y="228" text-anchor="middle" font-size="10" fill="#8E4EC6" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="600">objectCreator</text>
+<text x="215" y="240" text-anchor="middle" font-size="10" fill="#8E4EC6" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="600">(no lee ni lista)</text>
+<polyline points="450,175 450,360" fill="none" stroke="#8E4EC6" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a8E4EC6)"/>
+<text x="450" y="228" text-anchor="middle" font-size="10" fill="#8E4EC6" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="600">trigger=jobs</text>
+<text x="450" y="240" text-anchor="middle" font-size="10" fill="#8E4EC6" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="600">(API Cloud Run)</text>
+<polyline points="760,175 760,255 500,255 500,360" fill="none" stroke="#5F6368" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a5F6368)"/>
+<text x="630" y="248" text-anchor="middle" font-size="10" fill="#5F6368" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="600">ejecuta</text>
+<polyline points="990,175 990,360" fill="none" stroke="#5F6368" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a5F6368)"/>
+<text x="1020" y="240" text-anchor="middle" font-size="10" fill="#5F6368" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="600">ejecuta</text>
+<polyline points="1300,360 1300,175" fill="none" stroke="#8E4EC6" stroke-width="1.6" marker-end="url(#a8E4EC6)"/>
+<text x="1215" y="255" text-anchor="middle" font-size="10" fill="#8E4EC6" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="600">portal lee GOLD</text>
+<text x="1215" y="267" text-anchor="middle" font-size="10" fill="#8E4EC6" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="600">(objectViewer) y entrega</text>
+<polyline points="240,415 290,415" fill="none" stroke="#1A73E8" stroke-width="1.9" marker-end="url(#a1A73E8)"/>
+<text x="265" y="408" text-anchor="middle" font-size="10" fill="#1A73E8" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="600">lee</text>
+<polyline points="530,415 585,415" fill="none" stroke="#1A73E8" stroke-width="1.9" marker-end="url(#a1A73E8)"/>
+<text x="558" y="408" text-anchor="middle" font-size="10" fill="#1A73E8" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="600">sube</text>
+<polyline points="805,415 850,415" fill="none" stroke="#188038" stroke-width="1.9" marker-end="url(#a188038)"/>
+<text x="828" y="408" text-anchor="middle" font-size="10" fill="#188038" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="600">lee</text>
+<polyline points="1090,415 1180,415" fill="none" stroke="#188038" stroke-width="1.9" marker-end="url(#a188038)"/>
+<text x="1135" y="408" text-anchor="middle" font-size="10" fill="#188038" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="600">sube original</text>
+<polyline points="500,470 500,582 560,582" fill="none" stroke="#E8710A" stroke-width="1.6" marker-end="url(#aE8710A)"/>
+<text x="528" y="560" text-anchor="middle" font-size="10" fill="#E8710A" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="600">wrap</text>
+<text x="528" y="572" text-anchor="middle" font-size="10" fill="#E8710A" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="600">(TLS)</text>
+<polyline points="830,582 970,582 970,470" fill="none" stroke="#E8710A" stroke-width="1.6" marker-end="url(#aE8710A)"/>
+<text x="900" y="575" text-anchor="middle" font-size="10" fill="#E8710A" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="600">unwrap(DEK) · TLS</text>
+<polyline points="1290,545 1290,470" fill="none" stroke="#5F6368" stroke-width="1.6" stroke-dasharray="2 4" marker-end="url(#a5F6368)"/>
+<text x="1305" y="515" text-anchor="middle" font-size="10" fill="#5F6368" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="600">lee</text>
+<polyline points="140,470 140,690 1190,690 1190,620" fill="none" stroke="#5F6368" stroke-width="1.6" stroke-dasharray="2 4" marker-end="url(#a5F6368)"/>
+<text x="660" y="684" text-anchor="middle" font-size="10" fill="#5F6368" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="600">lee (original)</text>
+<polyline points="340,470 340,545" fill="none" stroke="#5F6368" stroke-width="1.6" stroke-dasharray="2 4" marker-end="url(#a5F6368)"/>
+<text x="300" y="505" text-anchor="middle" font-size="10" fill="#5F6368" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="600">logs de</text>
+<text x="300" y="517" text-anchor="middle" font-size="10" fill="#5F6368" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="600">jobs y KMS</text>
+<text x="720" y="835" text-anchor="middle" font-size="10.5" fill="#5F6368">Líneas continuas gruesas = datos · punteadas largas = disparo/ejecución · punteadas cortas = lectura/logs · naranja = llamadas a KMS</text>
+</svg>

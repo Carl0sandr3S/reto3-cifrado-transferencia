@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% from "_icons.html" import step_upload, step_lock, step_done, check_circle, alert_circle %}
+{% block body %}
+<h1>Enviar un documento</h1>
+<p class="lead">Sube el archivo y el sistema se encarga del resto.</p>
+
+<ol class="steps">
+  <li>{{ step_upload() }}<div><strong>1. Súbelo</strong><span>Elige el archivo y envíalo</span></div></li>
+  <li>{{ step_lock() }}<div><strong>2. Se cifra</strong><span>Cifrado y verificación automáticos</span></div></li>
+  <li>{{ step_done() }}<div><strong>3. Se entrega</strong><span>Tu jefe lo descarga cuando termina</span></div></li>
+</ol>
+
+{% if receipt %}
+<div class="receipt {{ '' if receipt.iniciado else 'warn' }}" role="status">
+  {% if receipt.iniciado %}{{ check_circle() }}{% else %}{{ alert_circle() }}{% endif %}
+  <div>
+    <h2>Archivo recibido.</h2>
+    <dl>
+      <dt>Archivo</dt><dd>{{ receipt.nombre }} ({{ receipt.bytes }} bytes)</dd>
+      <dt>Referencia</dt><dd><code>{{ receipt.run_id }}</code></dd>
+      <dt>SHA-256</dt><dd><code>{{ receipt.sha256 }}</code></dd>
+    </dl>
+    <p style="margin:10px 0 0">
+      {% if receipt.iniciado %}
+      Se cifra y se entrega de forma automática; quien lo recibe lo verá disponible en unos minutos.
+      {% else %}
+      <strong>Atención:</strong> el archivo quedó guardado, pero el proceso de cifrado no se pudo iniciar.
+      Informa a soporte con la referencia.
+      {% endif %}
+    </p>
+  </div>
+</div>
+{% endif %}
+
+<section class="card">
+  <form id="form-subir" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="csrf" value="{{ csrf_token() }}">
+    <label for="archivo" style="margin-top:0">Selecciona el archivo</label>
+    <div class="drop">
+      <input id="archivo" name="archivo" type="file" required>
+      {{ step_upload() }}
+      <b>Haz clic para elegir un archivo</b>
+      <small>PDF, Word, Excel, CSV, TXT o imagen · máximo 25 MB</small>
+      <span id="fname">Ningún archivo seleccionado</span>
+    </div>
+    <button id="enviar">Enviar</button>
+  </form>
+</section>
+
+<script>
+  (function () {
+    var input = document.getElementById('archivo'), name = document.getElementById('fname');
+    var form = document.getElementById('form-subir'), btn = document.getElementById('enviar');
+    input.addEventListener('change', function () {
+      name.textContent = input.files.length ? input.files[0].name : 'Ningún archivo seleccionado';
+    });
+    form.addEventListener('submit', function () {   // evita enviar dos veces el mismo archivo
+      btn.disabled = true; btn.textContent = 'Enviando…';
+    });
+  })();
+</script>
+{% endblock %}

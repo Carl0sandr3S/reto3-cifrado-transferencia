@@ -1,0 +1,89 @@
+{# Íconos e ilustraciones originales (SVG en línea). Se importan con: {% from "_icons.html" import logo, ... %} #}
+
+{% macro logo(size=34) -%}
+<svg width="{{ size }}" height="{{ size }}" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+  <path d="M16 2 4 6.5v8.2c0 7.2 4.9 12.9 12 14.8 7.1-1.9 12-7.6 12-14.8V6.5z" fill="#2DD4BF"/>
+  <path d="M11 8.5h7l3.5 3.5V23H11z" fill="#fff"/>
+  <path d="M18 8.5V12h3.5z" fill="#B6EEE6"/>
+  <path d="M13.3 17.2l2.1 2.1 3.8-4.2" stroke="#0F766E" stroke-width="1.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+{%- endmacro %}
+
+{% macro step_upload() -%}
+<svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true" focusable="false">
+  <circle cx="22" cy="22" r="22" fill="#E0F2F1"/>
+  <path d="M22 28V15m0 0-5 5m5-5 5 5" stroke="#0F766E" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M13 29v2.5c0 .8.7 1.5 1.5 1.5h15c.8 0 1.5-.7 1.5-1.5V29" stroke="#0F766E" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+</svg>
+{%- endmacro %}
+
+{% macro step_lock() -%}
+<svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true" focusable="false">
+  <circle cx="22" cy="22" r="22" fill="#E0F2F1"/>
+  <rect x="14" y="21" width="16" height="12" rx="2.5" fill="#0F766E"/>
+  <path d="M17.5 21v-3.5a4.5 4.5 0 0 1 9 0V21" stroke="#0F766E" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+  <circle cx="22" cy="27" r="1.7" fill="#E0F2F1"/>
+</svg>
+{%- endmacro %}
+
+{% macro step_done() -%}
+<svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true" focusable="false">
+  <circle cx="22" cy="22" r="22" fill="#E0F2F1"/>
+  <path d="M22 14v13m0 0-5-5m5 5 5-5" stroke="#0F766E" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M14 31.5h16" stroke="#0F766E" stroke-width="2.4" stroke-linecap="round"/>
+</svg>
+{%- endmacro %}
+
+{% macro file_icon() -%}
+<svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+  <path d="M7 3h9l6 6v14.5c0 .8-.7 1.5-1.5 1.5h-13.5c-.8 0-1.5-.7-1.5-1.5v-18.5c0-1.1.9-2 2-2z" fill="#DCE7F3"/>
+  <path d="M16 3v6h6z" fill="#9DB6D2"/>
+  <path d="M9.5 14h9m-9 3.5h9m-9 3.5h5.5" stroke="#4A6A8A" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
+{%- endmacro %}
+
+{% macro check_circle(size=34) -%}
+<svg width="{{ size }}" height="{{ size }}" viewBox="0 0 34 34" aria-hidden="true" focusable="false">
+  <circle cx="17" cy="17" r="17" fill="#1B7F4B"/>
+  <path d="M10 17.5l5 5 9-10" stroke="#fff" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+{%- endmacro %}
+
+{% macro alert_circle(size=34) -%}
+<svg width="{{ size }}" height="{{ size }}" viewBox="0 0 34 34" aria-hidden="true" focusable="false">
+  <circle cx="17" cy="17" r="17" fill="#B45309"/>
+  <path d="M17 9.5v9" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="17" cy="24" r="1.9" fill="#fff"/>
+</svg>
+{%- endmacro %}
+
+{% macro empty_folder() -%}
+<svg width="120" height="96" viewBox="0 0 120 96" aria-hidden="true" focusable="false">
+  <path d="M10 22c0-3.3 2.7-6 6-6h24l10 10h54c3.3 0 6 2.7 6 6v44c0 3.3-2.7 6-6 6H16c-3.3 0-6-2.7-6-6z" fill="#DCE7F3"/>
+  <path d="M10 38c0-3.3 2.7-6 6-6h88c3.3 0 6 2.7 6 6v38c0 3.3-2.7 6-6 6H16c-3.3 0-6-2.7-6-6z" fill="#B9CDE3"/>
+  <path d="M46 57h28" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+</svg>
+{%- endmacro %}
+
+{# Ilustración del flujo para la pantalla de acceso: documento -> candado -> documento verificado #}
+{% macro hero_flow() -%}
+<svg viewBox="0 0 360 200" role="img" aria-label="Un documento se cifra y llega verificado a su destino" focusable="false">
+  <rect x="8" y="48" width="92" height="116" rx="10" fill="#fff" opacity=".96"/>
+  <path d="M26 82h56M26 98h56M26 114h38" stroke="#9DB6D2" stroke-width="5" stroke-linecap="round"/>
+  <rect x="26" y="130" width="30" height="8" rx="4" fill="#CBD9E8"/>
+
+  <path d="M110 106h38m0 0-8-7m8 7-8 7" stroke="#8FD9CF" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <circle cx="180" cy="106" r="38" fill="#2DD4BF"/>
+  <rect x="162" y="100" width="36" height="28" rx="6" fill="#0F4F4A"/>
+  <path d="M168 100V92a12 12 0 0 1 24 0v8" stroke="#0F4F4A" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <circle cx="180" cy="113" r="4.2" fill="#2DD4BF"/>
+
+  <path d="M222 106h38m0 0-8-7m8 7-8 7" stroke="#8FD9CF" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="268" y="48" width="92" height="116" rx="10" fill="#fff" opacity=".96"/>
+  <path d="M286 82h56M286 98h56M286 114h38" stroke="#9DB6D2" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="336" cy="140" r="15" fill="#1B7F4B"/>
+  <path d="M329 140.5l5 5 9-10" stroke="#fff" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+{%- endmacro %}
